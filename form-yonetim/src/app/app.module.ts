@@ -3,22 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import { UserInfoFormComponent } from './user-info-form/user-info-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { UserFormListComponent } from './user-info-form/user-form-list/user-form-list.component';
+import { UserListFormComponent } from './user-list-form/user-list-form.component';
+import {RouterModule,Routes } from '@angular/router';
+import { FormDetailComponent } from './form-detail/form-detail.component'
+const appRoutes:Routes=[
+  {path:'',component:UserListFormComponent},
+  {path:'forms/:formName',component:FormDetailComponent}
 
-
+]
 @NgModule({
   declarations: [
     AppComponent,
-    UserInfoFormComponent,
-    UserFormListComponent,
+    UserListFormComponent,
+    FormDetailComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
 
   ],
   providers: [

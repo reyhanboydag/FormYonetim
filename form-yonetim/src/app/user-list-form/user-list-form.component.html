@@ -1,0 +1,95 @@
+<br/>
+<br/>
+<div class="container">
+  <div class="form-header">
+    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Create</button>
+      <form>
+        <div class="form-group form-inline">
+            Full text search: <input class="form-control ml-2" type="text" />
+        </div>
+      </form>
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Form Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Name</th>
+          <th scope="col">Surname</th>
+          <th scope="col">Age</th>
+          <th scope="col">Detail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let form of formService.getForms()">
+    
+          <td>
+            {{form.formName}}
+          </td>
+          <td>
+            {{form.description}}
+          </td> 
+          <td>
+            {{form.firstName}}
+          </td> 
+          <td>
+            {{form.lastName}}
+          </td> 
+          <td>
+            {{form.age}}
+          </td> 
+          <td>
+            <a class="btn btn-info" [routerLink]="['/forms',form.formName]" role="button">Detail</a>
+          </td> 
+        </tr>
+        </tbody>
+      </table>
+  </div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Form</h4>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <form #userForm="ngForm">
+            {{userForm.value | json}}
+            <hr/>
+            <div class="form-group">
+            <label for="formName">Form Name</label>
+            <input type="text" id="formName" class="form-control" name="formName" [(ngModel)]="formName" value={{formName}}>
+            </div>
+            <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" class="form-control"  name="description"  [(ngModel)]="description" value={{description}} >
+            </div>
+            <div class="form-group">
+            <label for="createdAt">CreatedAt</label>
+            <input type="text" id="createdAt" class="form-control"  name="createdAt" [(ngModel)]="createdAt" value={{createdAt}}>
+            </div>
+            <div ngModelGroup="fields">
+            <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input required  name="firstName" (change)="log(firstName)" id="firstName" type="text" class="form-control" #firstName="ngModel" [(ngModel)]="firstNameText" value={{firstName}}>
+            <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">First Name is Required</div>
+            </div>
+            <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input required  name="lastName" (change)="log(lastName)"  type="text" id="lastName" class="form-control" #lastName="ngModel" [(ngModel)]="lastNameText" value={{lastName}}>
+            <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">Last Name is Required</div>
+            
+            </div>
+            <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" value="age" id="age" class="form-control"  name="age" [(ngModel)]="age" value={{age}}>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button  [disabled]="userForm.form.invalid" class="btn btn-primary" (click)="addForm()">Submit</button>
+          </div>
+            </form>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <hr>
